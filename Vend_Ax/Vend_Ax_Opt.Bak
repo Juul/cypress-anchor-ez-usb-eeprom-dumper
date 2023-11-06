@@ -1,0 +1,39 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+ cExt (*.c)
+ aExt (*.a*; *.src)
+ oExt (*.obj)
+ lExt (*.lib)
+ tExt (*.txt)
+ pExt (*.plm)
+ DaveTm { 0,0,0,0,0,0,0,0 }
+
+Target (Target 1), 0x0000 // Tools: 'MCS-51'
+GRPOPT 1,(Source Group 1),1,0,0
+
+OPTFFF 1,1,1,0,0,9,9,0,<.\FW.C><FW.C> { 44,0,0,0,0,0,0,0,1,0,0,0,255,255,255,255,255,255,255,255,252,255,255,255,226,255,255,255,110,0,0,0,145,0,0,0,226,4,0,0,231,1,0,0 }
+OPTFFF 1,2,1,0,0,426,426,0,<.\VEND_AX.C><VEND_AX.C> { 44,0,0,0,2,0,0,0,3,0,0,0,255,255,255,255,255,255,255,255,252,255,255,255,226,255,255,255,88,0,0,0,116,0,0,0,200,4,0,0,200,1,0,0 }
+OPTFFF 1,3,2,0,0,0,0,0,<.\DSCR.A51><DSCR.A51> 
+OPTFFF 1,4,3,0,0,0,0,0,<..\..\..\Target\Lib\Ezusb\USBJmpTb.OBJ><USBJmpTb.OBJ> 
+OPTFFF 1,5,4,0,0,0,0,0,<..\..\..\Target\Lib\Ezusb\Ezusb.lib><Ezusb.lib> 
+
+
+TARGOPT 1, (Target 1)
+ CLK51=24000000
+  OPTTT 1,0,1,0
+  OPTHX 0,65535,0,0,0
+  OPTLX 120,65,8,<.\>
+  OPTLT 1,1,1,0,1,1,0,1,0,0,0
+  OPTXL 1,1,1,1,1,1,1,0,0
+  OPTFL 1,0,1
+  OPTBL 0,(Add on databooks)<DATASHTS\ADDBOOKS.PDF>
+  OPTBL 1,(Data Sheet)<DATASHTS\CYPRESS\ezusbtrm_v1-8.pdf>
+  OPTDL (S8051.DLL)()(DP51.DLL)(-pAN21)(S8051.DLL)()(TP51.DLL)(-pAN21)
+  OPTDBG 49150,0,()()()()()()()()()() ()()()()
+  OPTKEY 0,(MON51)(-S2 -B38400 -O31)
+  OPTDF 0x0
+  OPTLE <>
+  OPTLC <>
+EndOpt
+

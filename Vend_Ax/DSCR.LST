@@ -1,0 +1,190 @@
+A51 MACRO ASSEMBLER  DSCR                                                                 11/04/2023 04:03:07 PAGE     1
+
+
+MACRO ASSEMBLER A51 V6.10
+OBJECT MODULE PLACED IN .\DSCR.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE .\DSCR.A51 SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;;-----------------------------------------------------------------------------
+                       2     ;;      File:           dscr.a51
+                       3     ;;      Contents:       This file contains descriptor data tables.  
+                       4     ;;
+                       5     ;;      Copyright (c) 1997 AnchorChips, Inc. All rights reserved
+                       6     ;;-----------------------------------------------------------------------------
+                       7     
+  0001                 8     DSCR_DEVICE     equ     1       ;; Descriptor type: Device
+  0002                 9     DSCR_CONFIG     equ     2       ;; Descriptor type: Configuration
+  0003                10     DSCR_STRING     equ     3       ;; Descriptor type: String
+  0004                11     DSCR_INTRFC     equ     4       ;; Descriptor type: Interface
+  0005                12     DSCR_ENDPNT     equ     5       ;; Descriptor type: Endpoint
+                      13     
+  0000                14     ET_CONTROL      equ     0       ;; Endpoint type: Control
+  0001                15     ET_ISO          equ     1       ;; Endpoint type: Isochronous
+  0002                16     ET_BULK         equ     2       ;; Endpoint type: Bulk
+  0003                17     ET_INT          equ     3       ;; Endpoint type: Interrupt
+                      18     
+                      19     public          DeviceDscr, ConfigDscr, StringDscr, UserDscr
+                      20     
+                      21     DSCR    SEGMENT CODE
+                      22     
+                      23     ;;-----------------------------------------------------------------------------
+                      24     ;; Global Variables
+                      25     ;;-----------------------------------------------------------------------------
+----                  26                     rseg DSCR               ;; locate the descriptor table in on-part memory.
+                      27     
+0000                  28     DeviceDscr:     
+0000 12               29                     db      deviceDscrEnd-DeviceDscr                ;; Descriptor length
+0001 01               30                     db      DSCR_DEVICE     ;; Decriptor type
+0002 0001             31                     dw      0001H           ;; Specification Version (BCD)
+0004 00               32                     db      00H             ;; Device class
+0005 00               33                     db      00H             ;; Device sub-class
+0006 00               34                     db      00H             ;; Device sub-sub-class
+0007 40               35                     db      64              ;; Maximum packet size
+0008 4705             36                     dw      4705H           ;; Vendor ID
+000A 0210             37                     dw      0210H           ;; Product ID (Sample Device)
+000C 0100             38                     dw      0100H           ;; Product version ID
+000E 01               39                     db      1               ;; Manufacturer string index
+000F 02               40                     db      2               ;; Product string index
+0010 00               41                     db      0               ;; Serial number string index
+0011 01               42                     db      1               ;; Number of configurations
+0012                  43     deviceDscrEnd:
+                      44     
+0012                  45     ConfigDscr:     
+0012 09               46                     db      ConfigDscrEnd-ConfigDscr                ;; Descriptor length
+0013 02               47                     db      DSCR_CONFIG     ;; Descriptor type
+0014 20               48                     db      (StringDscr-ConfigDscr) mod 256 ;; Config + End Points length (LSB)
+0015 00               49                     db      (StringDscr-ConfigDscr) / 256   ;; Config + End Points length (MSB)
+0016 01               50                     db      1               ;; Number of interfaces
+0017 01               51                     db      1               ;; Interface number
+0018 00               52                     db      0               ;; Configuration string
+0019 A0               53                     db      10100000b       ;; Attributes (b7 - buspwr, b6 - selfpwr, b5 - rwu)
+001A 00               54                     db      0               ;; Power requirement (div 2 ma)
+001B                  55     ConfigDscrEnd:
+                      56     
+001B                  57     IntrfcDscr:
+001B 09               58                     db      IntrfcDscrEnd-IntrfcDscr                ;; Descriptor length
+A51 MACRO ASSEMBLER  DSCR                                                                 11/04/2023 04:03:07 PAGE     2
+
+001C 04               59                     db      DSCR_INTRFC     ;; Descriptor type
+001D 00               60                     db      0               ;; Zero-based index of this interface
+001E 00               61                     db      0               ;; Alternate setting
+001F 02               62                     db      2               ;; Number of end points 
+0020 FF               63                     db      0ffH            ;; Interface class
+0021 00               64                     db      00H             ;; Interface sub class
+0022 00               65                     db      00H             ;; Interface sub sub class
+0023 00               66                     db      0               ;; Interface descriptor string index
+0024                  67     IntrfcDscrEnd:
+                      68                     
+0024                  69     EpInDscr:
+0024 07               70                     db      EpInDscrEnd-EpInDscr            ;; Descriptor length
+0025 05               71                     db      DSCR_ENDPNT     ;; Descriptor type
+0026 82               72                     db      82H             ;; Endpoint number, and direction
+0027 02               73                     db      ET_BULK         ;; Endpoint type
+0028 40               74                     db      40H             ;; Maximun packet size (LSB)
+0029 00               75                     db      00H             ;; Max packect size (MSB)
+002A 00               76                     db      00H             ;; Polling interval
+002B                  77     EpInDscrEnd:
+                      78     
+002B                  79     EpOutDscr:
+002B 07               80                     db      EpOutDscrEnd-EpOutDscr          ;; Descriptor length
+002C 05               81                     db      DSCR_ENDPNT     ;; Descriptor type
+002D 02               82                     db      02H             ;; Endpoint number, and direction
+002E 02               83                     db      ET_BULK         ;; Endpoint type
+002F 40               84                     db      40H             ;; Maximun packet size (LSB)
+0030 00               85                     db      00H             ;; Max packect size (MSB)
+0031 00               86                     db      00H             ;; Polling interval
+0032                  87     EpOutDscrEnd:
+                      88     
+0032                  89     StringDscr:
+                      90     
+0032                  91     StringDscr0:    
+0032 04               92                     db      StringDscr0End-StringDscr0              ;; String descriptor length
+0033 03               93                     db      DSCR_STRING
+0034 0904             94                     db      09H,04H
+0036                  95     StringDscr0End:
+                      96     
+0036                  97     StringDscr1:    
+0036 1A               98                     db      StringDscr1End-StringDscr1              ;; String descriptor length
+0037 03               99                     db      DSCR_STRING
+0038 4100            100                     db      'A',00
+003A 6E00            101                     db      'n',00
+003C 6300            102                     db      'c',00
+003E 6800            103                     db      'h',00
+0040 6F00            104                     db      'o',00
+0042 7200            105                     db      'r',00
+0044 2000            106                     db      ' ',00
+0046 4300            107                     db      'C',00
+0048 6800            108                     db      'h',00
+004A 6900            109                     db      'i',00
+004C 7000            110                     db      'p',00
+004E 7300            111                     db      's',00
+0050                 112     StringDscr1End:
+                     113     
+0050                 114     StringDscr2:    
+0050 1C              115                     db      StringDscr2End-StringDscr2              ;; Descriptor length
+0051 03              116                     db      DSCR_STRING
+0052 4500            117                     db      'E',00
+0054 5A00            118                     db      'Z',00
+0056 2D00            119                     db      '-',00
+0058 5500            120                     db      'U',00
+005A 5300            121                     db      'S',00
+005C 4200            122                     db      'B',00
+005E 2000            123                     db      ' ',00
+0060 4400            124                     db      'D',00
+A51 MACRO ASSEMBLER  DSCR                                                                 11/04/2023 04:03:07 PAGE     3
+
+0062 6500            125                     db      'e',00
+0064 7600            126                     db      'v',00
+0066 6900            127                     db      'i',00
+0068 6300            128                     db      'c',00
+006A 6500            129                     db      'e',00
+006C                 130     StringDscr2End:
+                     131     
+006C                 132     UserDscr:               
+006C 0000            133                     dw      0000H
+                     134                     end
+                                             
+A51 MACRO ASSEMBLER  DSCR                                                                 11/04/2023 04:03:07 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+CONFIGDSCR . . . .  C ADDR   0012H   R   SEG=DSCR
+CONFIGDSCREND. . .  C ADDR   001BH   R   SEG=DSCR
+DEVICEDSCR . . . .  C ADDR   0000H   R   SEG=DSCR
+DEVICEDSCREND. . .  C ADDR   0012H   R   SEG=DSCR
+DSCR . . . . . . .  C SEG    006EH       REL=UNIT
+DSCR_CONFIG. . . .  N NUMB   0002H   A   
+DSCR_DEVICE. . . .  N NUMB   0001H   A   
+DSCR_ENDPNT. . . .  N NUMB   0005H   A   
+DSCR_INTRFC. . . .  N NUMB   0004H   A   
+DSCR_STRING. . . .  N NUMB   0003H   A   
+EPINDSCR . . . . .  C ADDR   0024H   R   SEG=DSCR
+EPINDSCREND. . . .  C ADDR   002BH   R   SEG=DSCR
+EPOUTDSCR. . . . .  C ADDR   002BH   R   SEG=DSCR
+EPOUTDSCREND . . .  C ADDR   0032H   R   SEG=DSCR
+ET_BULK. . . . . .  N NUMB   0002H   A   
+ET_CONTROL . . . .  N NUMB   0000H   A   
+ET_INT . . . . . .  N NUMB   0003H   A   
+ET_ISO . . . . . .  N NUMB   0001H   A   
+INTRFCDSCR . . . .  C ADDR   001BH   R   SEG=DSCR
+INTRFCDSCREND. . .  C ADDR   0024H   R   SEG=DSCR
+STRINGDSCR . . . .  C ADDR   0032H   R   SEG=DSCR
+STRINGDSCR0. . . .  C ADDR   0032H   R   SEG=DSCR
+STRINGDSCR0END . .  C ADDR   0036H   R   SEG=DSCR
+STRINGDSCR1. . . .  C ADDR   0036H   R   SEG=DSCR
+STRINGDSCR1END . .  C ADDR   0050H   R   SEG=DSCR
+STRINGDSCR2. . . .  C ADDR   0050H   R   SEG=DSCR
+STRINGDSCR2END . .  C ADDR   006CH   R   SEG=DSCR
+USERDSCR . . . . .  C ADDR   006CH   R   SEG=DSCR
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

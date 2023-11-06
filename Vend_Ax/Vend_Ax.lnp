@@ -1,0 +1,9 @@
+"FW.obj",
+"VEND_AX.obj",
+"DSCR.obj",
+"..\..\..\Target\Lib\Ezusb\USBJmpTb.OBJ",
+"..\..\..\Target\Lib\Ezusb\Ezusb.lib" 
+TO "Vend_Ax" 
+RAMSIZE(256) 
+CODE( 0x0080 )
+XDATA( 0x1000 )
