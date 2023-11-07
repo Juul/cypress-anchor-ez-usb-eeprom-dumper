@@ -1,5 +1,7 @@
 
-This is a set of tools for dumping the firmware of the Anchor / Cypress microcontroller model AN2131 which was used in the USB2000 USB spectrometer sold by Ocean Optics which again was used inside the NanoDrop 1000 spectrometer.
+This is a set of tools for dumping the firmware from the EEPROM of the Anchor / Cypress microcontroller model AN2131 which was used in the USB2000 USB spectrometer sold by Ocean Optics which again was used inside the NanoDrop 1000 spectrometer.
+
+This dumping requires only access to the USB2000 external pin header and a USB connection.
 
 While Ocean Insight (formerly Ocean Optics) freely distribute firmware updates and instructions of re-writing the firmware to the USB2000 EEPROM, unfortunately the NanoDrop 1000 uses a modified firmware which it seems it not made available anymore (if it ever was, which is doubtful).
 
