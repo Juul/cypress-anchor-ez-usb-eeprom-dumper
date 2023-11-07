@@ -1,5 +1,11 @@
 
-Tools for dumping NanoDrop 1000 firmware from Ocean Optics USB2000 spectrometer over USB.
+This is a set of tools for dumping the firmware of the Anchor / Cypress microcontroller model AN2131 which was used in the USB2000 USB spectrometer sold by Ocean Optics which again was used inside the NanoDrop 1000 spectrometer.
+
+While Ocean Insight (formerly Ocean Optics) freely distribute firmware updates and instructions of re-writing the firmware to the USB2000 EEPROM, unfortunately the NanoDrop 1000 uses a modified firmware which it seems it not made available anymore (if it ever was, which is doubtful).
+
+These devices tend to suffer from EEPROM corruption over time so using this tool it should be possible to dump the EEPROM from a healthy NanoDrop 1000 and then that firmware can be written to a NanoDrop 1000 with a corrupted firmware.
+
+# Instructions
 
 First, ground top left pin of USB2000 GPIO header to e.g. USB casing while plugging in the USB cable, then unground. This disables loading firmware from USB.
 
@@ -91,3 +97,8 @@ Its I2C address is `1010<3-bit-chip-select><1 for read, 0 for write>` but in the
 
 So if all chip select bits are zero (which they are on the USB2000) the address is `01010001` or 0x51.
 
+# Attribution
+
+USB2000 is a trademark of Ocean Insight and NanoDrop is a trademark of Thermo FIsher.
+
+This project is not in any way afficiliated with Ocean Insight (formerly Ocean Optics) nor Thermo Fisher. 
